@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>音変化道場 — 英語リスニング基礎トレーニング</title>
+<style>
+:root{
+  --ink:#16324f;
+  --paper:#f2f6f9;
+  --card:#ffffff;
+  --teal:#0e9594;
+  --teal-dark:#0a6e6d;
+  --coral:#e4572e;
+  --gold:#f2b134;
+  --line:#d8e2ea;
+  --muted:#6b7f92;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+  background:var(--paper);color:var(--ink);
+  min-height:100vh;padding-bottom:70px;
+}
+header{
+  background:var(--ink);color:#fff;padding:14px 16px 12px;
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+}
+header h1{font-size:17px;font-weight:700;letter-spacing:.03em}
+header .xp{
+  font-size:12px;background:rgba(255,255,255,.14);border-radius:14px;
+  padding:4px 10px;font-weight:600;
+}
+.wave{display:inline-flex;align-items:flex-end;gap:2px;height:14px;margin-right:6px;vertical-align:-2px}
+.wave i{width:3px;background:var(--teal);border-radius:2px;display:block}
+.wave i:nth-child(1){height:6px}.wave i:nth-child(2){height:12px}
+.wave i:nth-child(3){height:8px}.wave i:nth-child(4){height:14px}.wave i:nth-child(5){height:5px}
+main{padding:14px 14px 20px;max-width:640px;margin:0 auto}
+.screen{display:none}.screen.on{display:block}
+.intro{font-size:13px;color:var(--muted);line-height:1.7;margin:2px 2px 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:13px 12px 11px;cursor:pointer;position:relative;overflow:hidden;
+}
+.cat:active{transform:scale(.97)}
+.cat .ic{font-size:22px;margin-bottom:6px}
+.cat .nm{font-size:13.5px;font-weight:700;line-height:1.35;margin-bottom:2px}
+.cat .sub{font-size:10.5px;color:var(--muted);line-height:1.4;margin-bottom:8px}
+.bar{height:5px;background:#e7eef3;border-radius:3px;overflow:hidden}
+.bar b{display:block;height:100%;background:var(--teal);border-radius:3px;transition:width .4s}
+.cat .pct{position:absolute;top:11px;right:11px;font-size:10px;color:var(--muted);font-weight:600}
+.mixbtn{
+  margin-top:12px;width:100%;background:var(--ink);color:#fff;border:none;
+  border-radius:14px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;
+  font-family:inherit;
+}
+.mixbtn small{display:block;font-weight:400;font-size:11px;opacity:.75;margin-top:3px}
+.back{
+  background:none;border:none;color:var(--teal-dark);font-size:14px;font-weight:600;
+  padding:4px 0 10px;cursor:pointer;font-family:inherit;
+}
+.cathead{margin-bottom:10px}
+.cathead h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px}
+.rule{
+  background:#e8f4f4;border:1px solid #bfdedd;border-radius:12px;
+  padding:12px 13px;font-size:13px;line-height:1.75;margin:10px 0 12px;
+}
+.rule b{color:var(--teal-dark)}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{
+  flex:1;text-align:center;padding:9px 4px;border-radius:10px;font-size:13px;font-weight:700;
+  background:#e7eef3;color:var(--muted);cursor:pointer;border:none;font-family:inherit;
+}
+.tab.on{background:var(--teal);color:#fff}
+.item{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:12px 13px;margin-bottom:9px;
+}
+.item .en{font-size:16px;font-weight:600;line-height:1.5;margin-bottom:2px}
+.item .en mark{background:#fff3c9;color:inherit;padding:0 2px;border-radius:3px}
+.item .kana{font-size:13px;color:var(--coral);font-weight:700;margin:3px 0 1px;display:none}
+.item.showk .kana{display:block}
+.item .ja{font-size:12px;color:var(--muted);display:none;margin-top:2px}
+.item.showj .ja{display:block}
+.item .ctr{display:flex;gap:7px;margin-top:9px}
+.pbtn{
+  border:1px solid var(--line);background:#f6f9fb;border-radius:9px;
+  padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--ink);
+  cursor:pointer;font-family:inherit;
+}
+.pbtn.playing{background:var(--teal);color:#fff;border-color:var(--teal)}
+.star{margin-left:auto;font-size:14px;align-self:center;color:var(--gold)}
+.drill{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:18px 16px;text-align:center;
+}
+.drill .prog{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.bigplay{
+  width:84px;height:84px;border-radius:50%;background:var(--teal);color:#fff;
+  border:none;font-size:32px;cursor:pointer;margin:6px auto 4px;display:block;
+  box-shadow:0 4px 14px rgba(14,149,148,.35);
+}
+.bigplay:active{transform:scale(.94)}
+.slowlink{background:none;border:none;color:var(--teal-dark);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;padding:6px;margin-bottom:10px}
+.cloze{font-size:17px;line-height:1.7;margin:8px 0 14px;font-weight:600}
+.cloze u{color:var(--teal-dark);text-decoration:none;border-bottom:2px dashed var(--teal);padding:0 4px;letter-spacing:2px}
+.ansin{
+  width:100%;padding:12px;font-size:16px;border:2px solid var(--line);border-radius:11px;
+  font-family:inherit;text-align:center;outline:none;
+}
+.ansin:focus{border-color:var(--teal)}
+.judge{
+  width:100%;margin-top:10px;background:var(--ink);color:#fff;border:none;border-radius:11px;
+  padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.result{margin-top:12px;font-size:14px;line-height:1.7;display:none}
+.result.on{display:block}
+.result .verdict{font-size:19px;font-weight:800;margin-bottom:5px}
+.result .verdict.ok{color:var(--teal-dark)}
+.result .verdict.ng{color:var(--coral)}
+.result .full{background:#f6f9fb;border-radius:10px;padding:10px;margin-top:7px;font-size:14px}
+.result .full mark{background:#fff3c9;padding:0 2px;border-radius:3px}
+.result .kn{color:var(--coral);font-weight:700;font-size:13px}
+.nextb{
+  width:100%;margin-top:12px;background:var(--teal);color:#fff;border:none;border-radius:11px;
+  padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:none;
+}
+.nextb.on{display:block}
+.choices{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.choice{
+  border:2px solid var(--line);background:#fff;border-radius:11px;padding:13px;
+  font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;
+}
+.choice.ok{border-color:var(--teal);background:#e8f4f4}
+.choice.ng{border-color:var(--coral);background:#fdeee8}
+.choice:disabled{opacity:.9}
+.donecard{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px 18px;text-align:center;
+}
+.donecard .big{font-size:38px;margin-bottom:8px}
+.donecard h3{font-size:18px;margin-bottom:6px}
+.donecard p{font-size:13px;color:var(--muted);line-height:1.7}
+.toggler{display:flex;gap:8px;margin:0 0 12px}
+.tg{
+  flex:1;border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px;
+  font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;
+}
+.tg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+footer{
+  position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;padding:8px 0 max(8px, env(safe-area-inset-bottom));z-index:50;
+}
+.fbtn{background:none;border:none;font-size:10.5px;color:var(--muted);font-weight:600;cursor:pointer;font-family:inherit;text-align:center;padding:2px 14px}
+.fbtn span{display:block;font-size:19px;margin-bottom:1px}
+.fbtn.on{color:var(--teal-dark)}
+.set-row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;font-size:13.5px}
+.set-row label{font-weight:700;display:block;margin-bottom:7px}
+.set-row select,.set-row input[type=range]{width:100%;font-size:14px;padding:8px;border-radius:8px;border:1px solid var(--line);font-family:inherit}
+.danger{color:var(--coral);background:none;border:1px solid var(--coral);border-radius:10px;padding:10px;width:100%;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
+.notice{font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="wave"><i></i><i></i><i></i><i></i><i></i></span>音変化道場</h1>
+  <div class="xp">XP <b id="xpVal">0</b></div>
+</header>
+
+<main>
+  <!-- ホーム -->
+  <section class="screen on" id="scr-home">
+    <p class="intro">日本人が聞き取れない原因の9割は「知らない単語」ではなく「知っている単語の音の変化」。10のカテゴリを何度も回して、耳の反射を作ろう。</p>
+    <div class="grid" id="catGrid"></div>
+    <button class="mixbtn" onclick="startMix()">🔥 実戦ミックステスト<small>全カテゴリから10問ランダム出題(書き取り)</small></button>
+  </section>
+
+  <!-- カテゴリ -->
+  <section class="screen" id="scr-cat">
+    <button class="back" onclick="go('home')">← カテゴリ一覧へ</button>
+    <div class="cathead"><h2 id="catTitle"></h2></div>
+    <div class="rule" id="catRule"></div>
+    <div class="tabs">
+      <button class="tab on" data-m="learn" onclick="setMode('learn')">📖 学ぶ</button>
+      <button class="tab" data-m="dict" onclick="setMode('dict')">✍️ 書き取り</button>
+      <button class="tab" data-m="quiz" onclick="setMode('quiz')">👂 聞き分け</button>
+    </div>
+    <div id="catBody"></div>
+  </section>
+
+  <!-- 設定 -->
+  <section class="screen" id="scr-set">
+    <div class="cathead"><h2>⚙️ 設定</h2></div>
+    <div class="set-row">
+      <label>英語の声</label>
+      <select id="voiceSel"></select>
+    </div>
+    <div class="set-row">
+      <label>通常再生の速さ: <span id="rateVal">1.0</span></label>
+      <input type="range" id="rateRange" min="0.7" max="1.3" step="0.05" value="1.0">
+    </div>
+    <div class="set-row">
+      <label>学習記録</label>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7" id="statText"></div>
+      <button class="danger" onclick="resetProgress()">記録をリセットする</button>
+    </div>
+    <p class="notice">※ 音声はiPhone内蔵の読み上げ(TTS)を使用。音が出ないときはマナーモードを解除してください。記録はこの端末のブラウザ内にのみ保存されます。</p>
+  </section>
+</main>
+
+<footer>
+  <button class="fbtn on" id="fb-home" onclick="go('home')"><span>🏠</span>ホーム</button>
+  <button class="fbtn" id="fb-set" onclick="go('set')"><span>⚙️</span>設定</button>
+</footer>
+
+<script>
+/* ================= データ =================
+   items: en=読み上げ文 / f=焦点フレーズ / k=カナ近似 / ja=意味 / pair=聞き分けペア(任意)
+   カテゴリを増やす場合はこの配列に追記するだけでOK */
+const CATS=[
+{id:"link",ic:"🔗",name:"連結(リンキング)",sub:"子音+母音がつながる",
+ rule:"単語の最後の<b>子音</b>と次の単語の<b>母音</b>がつながって1語のように聞こえる。<b>check it out → チェッキラウッ</b>。英語は単語ごとに切って発音されない、がすべての出発点。",
+ items:[
+ {en:"Check it out.",f:"check it out",k:"チェッキラウッ",ja:"ちょっと見てみて。"},
+ {en:"Take it easy.",f:"take it easy",k:"テイキリーズィ",ja:"気楽にね。"},
+ {en:"Turn it on.",f:"turn it on",k:"ターニロン",ja:"電源を入れて。"},
+ {en:"Think about it.",f:"think about it",k:"シンカバウリッ",ja:"考えてみて。"},
+ {en:"Come on in.",f:"come on in",k:"カモニン",ja:"どうぞ入って。"},
+ {en:"Pick it up.",f:"pick it up",k:"ピッキラップ",ja:"拾って。/ 迎えに行くよ。"},
+ {en:"That was an hour ago.",f:"an hour ago",k:"アナワラゴウ",ja:"それは1時間前だよ。"},
+ {en:"Look at this.",f:"look at this",k:"ルッカッディス",ja:"これを見て。"},
+ {en:"Hold on a second.",f:"hold on a second",k:"ホウルドナセカン",ja:"ちょっと待って。"},
+ {en:"You'll find it on your left.",f:"find it on your left",k:"ファインディロニョアレフト",ja:"左手に見えますよ。(第1回 問11)"}
+]},
+{id:"drop",ic:"✂️",name:"脱落(t・dが消える)",sub:"語末の音が発音されない",
+ rule:"<b>t / d</b> などの音は、次に子音が来ると<b>ほぼ消える</b>。<b>next week → ネクス(ト)ウィーク</b>。「聞こえなかった音」は最初から発音されていない。",
+ items:[
+ {en:"See you next week.",f:"next week",k:"ネクスウィーク",ja:"また来週。"},
+ {en:"It must be true.",f:"must be",k:"マスビー",ja:"本当に違いない。"},
+ {en:"I don't know.",f:"don't know",k:"ドンノウ",ja:"わからない。"},
+ {en:"Exactly!",f:"exactly",k:"イグザクリ",ja:"その通り!"},
+ {en:"She just left.",f:"just left",k:"ジャスレフト",ja:"彼女はちょうど出たところ。"},
+ {en:"I want a sandwich.",f:"sandwich",k:"サンウィッチ",ja:"サンドイッチがほしい。"},
+ {en:"We kept talking.",f:"kept talking",k:"ケプトーキング",ja:"私たちは話し続けた。"},
+ {en:"Last night was fun.",f:"last night",k:"ラスナイッ",ja:"昨夜は楽しかった。"},
+ {en:"He's my best friend.",f:"best friend",k:"ベスフレン",ja:"彼は親友だ。"},
+ {en:"I asked him twice.",f:"asked",k:"アスト",ja:"2回たずねた。(askedのkも弱まる)"}
+]},
+{id:"weak",ic:"🪶",name:"弱形(機能語が縮む)",sub:"can・of・for などが小さくなる",
+ rule:"前置詞・助動詞・代名詞などの<b>機能語</b>は、文の中では<b>弱く短く</b>発音される。<b>can → クン</b>、<b>of → ァヴ</b>、<b>for → ファ</b>。辞書の発音と実際の音が一番違うカテゴリ。",
+ items:[
+ {en:"I can do it.",f:"can",k:"クン(キャンではない)",ja:"私はできる。"},
+ {en:"Rock and roll.",f:"and",k:"ン(ロッケンロール)",ja:"ロックンロール。"},
+ {en:"A cup of tea, please.",f:"cup of",k:"カッパヴ",ja:"紅茶を1杯ください。"},
+ {en:"I'll be back in time for dinner.",f:"in time for dinner",k:"インタイムファディナー",ja:"夕食に間に合うように戻る。(第1回 問1)"},
+ {en:"I want to talk to you.",f:"to",k:"タ(トゥーではない)",ja:"あなたと話したい。"},
+ {en:"Tell them the truth.",f:"them",k:"ゼム→(テ)レム",ja:"彼らに本当のことを言って。"},
+ {en:"He was late again.",f:"was",k:"ワズ→ウォズ(弱く)",ja:"彼はまた遅刻した。"},
+ {en:"Wait at the station.",f:"at the",k:"アッザ",ja:"駅で待ってて。"},
+ {en:"She's from Canada.",f:"from",k:"フラム(フロムではない)",ja:"彼女はカナダ出身。"},
+ {en:"I think that it's fine.",f:"that",k:"ザッ(弱く短く)",ja:"それでいいと思う。"}
+]},
+{id:"assim",ic:"🔄",name:"同化(音が変身する)",sub:"did you→ディジュー",
+ rule:"<b>t / d / s + you</b> は音が合体して<b>チュ / ジュ / シュ</b>に変身する。<b>meet you → ミーチュー</b>、<b>did you → ディジュー</b>。「ジュー」と聞こえたら you を疑え。",
+ items:[
+ {en:"Did you see it?",f:"did you",k:"ディジュー",ja:"それ見た?"},
+ {en:"Nice to meet you.",f:"meet you",k:"ミーチュー",ja:"はじめまして。"},
+ {en:"Would you help me?",f:"would you",k:"ウッジュー",ja:"手伝ってくれる?"},
+ {en:"Can't you come?",f:"can't you",k:"キャンチュー",ja:"来られないの?"},
+ {en:"I miss you.",f:"miss you",k:"ミシュー",ja:"会いたいよ。"},
+ {en:"This year is special.",f:"this year",k:"ディシヤー",ja:"今年は特別だ。"},
+ {en:"I'll get you some water.",f:"get you",k:"ゲッチュー",ja:"水を持ってきてあげる。"},
+ {en:"As you know, it's hot today.",f:"as you know",k:"アジュノウ",ja:"知っての通り、今日は暑い。"},
+ {en:"What do you want?",f:"what do you",k:"ワジュ / ワチャ",ja:"何がほしいの?"},
+ {en:"Bless you!",f:"bless you",k:"ブレシュー",ja:"お大事に!(くしゃみに)"}
+]},
+{id:"flap",ic:"💧",name:"フラップT(tがラ行化)",sub:"water→ワーラー",
+ rule:"母音にはさまれた<b>t</b>は、アメリカ英語では<b>日本語のラ行</b>のような音になる。<b>water → ワーラー</b>、<b>get it → ゲリッ</b>。共通テストの音声でも頻出。",
+ items:[
+ {en:"Can I have some water?",f:"water",k:"ワーラー",ja:"水をもらえますか。"},
+ {en:"That's much better.",f:"better",k:"ベラー",ja:"それはずっといい。"},
+ {en:"A lot of people came.",f:"a lot of",k:"アロロヴ",ja:"たくさんの人が来た。"},
+ {en:"I got it.",f:"got it",k:"ガリッ",ja:"わかった。/ 取った。"},
+ {en:"What about you?",f:"what about",k:"ワラバウ",ja:"あなたはどう?"},
+ {en:"Put it on the table.",f:"put it on",k:"プリロン",ja:"テーブルに置いて。"},
+ {en:"My little sister.",f:"little",k:"リロー",ja:"私の妹。"},
+ {en:"It doesn't matter.",f:"matter",k:"マラー",ja:"気にしないで。"},
+ {en:"Not at all.",f:"not at all",k:"ナラロール",ja:"全然。/ どういたしまして。"},
+ {en:"See you later.",f:"later",k:"レイラー",ja:"またあとで。"}
+]},
+{id:"hdrop",ic:"👻",name:"消えるH(him・her)",sub:"tell him→テリム",
+ rule:"<b>he / him / her / his</b> の<b>h</b>は、文中では発音されないことが多い。<b>tell him → テリム</b>、<b>ask her → アスカー</b>。前の単語とつながって全く別の単語に聞こえる。",
+ items:[
+ {en:"Tell him the news.",f:"tell him",k:"テリム",ja:"彼にその知らせを伝えて。"},
+ {en:"Ask her a question.",f:"ask her",k:"アスカー",ja:"彼女に質問して。"},
+ {en:"Give him a call.",f:"give him",k:"ギヴィム",ja:"彼に電話して。"},
+ {en:"What's his name?",f:"what's his",k:"ワッツィズ",ja:"彼の名前は?"},
+ {en:"I like her a lot.",f:"like her",k:"ライカー",ja:"彼女が大好きだ。"},
+ {en:"Is he coming?",f:"is he",k:"イズィー",ja:"彼は来るの?"},
+ {en:"Has he finished?",f:"has he",k:"ハズィー",ja:"彼は終わった?"},
+ {en:"Help her out.",f:"help her",k:"ヘルパー",ja:"彼女を助けてあげて。"},
+ {en:"Call him back.",f:"call him",k:"コーリム",ja:"彼に折り返し電話して。"},
+ {en:"Does he know?",f:"does he",k:"ダズィー",ja:"彼は知ってるの?"}
+]},
+{id:"contr",ic:"🌀",name:"縮約(gonna・wanna)",sub:"会話体の合体語",
+ rule:"<b>going to → gonna</b>、<b>want to → wanna</b> のように、よく使う組み合わせは<b>1語に合体</b>する。書き言葉には出ないがリスニングには必ず出る。元の形とセットで覚える。",
+ items:[
+ {en:"I'm gonna be late.",f:"gonna",k:"ゴナ(=going to)",ja:"遅れそうだ。"},
+ {en:"I wanna go home.",f:"wanna",k:"ワナ(=want to)",ja:"家に帰りたい。"},
+ {en:"I gotta run.",f:"gotta",k:"ガラ(=got to)",ja:"もう行かなきゃ。"},
+ {en:"I have to finish this.",f:"have to",k:"ハフタ(=have to)",ja:"これを終わらせないと。"},
+ {en:"It's kinda cold.",f:"kinda",k:"カインダ(=kind of)",ja:"ちょっと寒い。"},
+ {en:"Lemme see.",f:"lemme",k:"レミ(=let me)",ja:"ちょっと見せて。/ ええと。"},
+ {en:"Gimme a hand.",f:"gimme",k:"ギミ(=give me)",ja:"手を貸して。"},
+ {en:"I dunno.",f:"dunno",k:"ダノウ(=don't know)",ja:"知らない。"},
+ {en:"You shoulda told me.",f:"shoulda",k:"シュダ(=should have)",ja:"言ってくれればよかったのに。"},
+ {en:"Whatcha doing?",f:"whatcha",k:"ワチャ(=what are you)",ja:"何してるの?"}
+]},
+{id:"stop",ic:"🤐",name:"無開放(飲み込まれる音)",sub:"good night→グッナイッ",
+ rule:"<b>p / t / k / b / d / g</b> の後に子音が来ると、口の形だけ作って<b>音を出さない</b>。<b>good night → グッ(ド)ナイッ</b>。「小さいッ」に聞こえたら無開放を疑う。",
+ items:[
+ {en:"Good night.",f:"good night",k:"グッナイッ",ja:"おやすみ。"},
+ {en:"I read that book.",f:"that book",k:"ザッブッ",ja:"その本を読んだ。"},
+ {en:"It was a big game.",f:"big game",k:"ビッゲイム",ja:"大事な試合だった。"},
+ {en:"Sit down, please.",f:"sit down",k:"スィッダウン",ja:"座ってください。"},
+ {en:"What time is it?",f:"what time",k:"ワッタイム",ja:"何時ですか。"},
+ {en:"Good job!",f:"good job",k:"グッジョブ",ja:"よくやった!"},
+ {en:"It's a hot day.",f:"hot day",k:"ホッデイ",ja:"暑い日だ。"},
+ {en:"She has a red car.",f:"red car",k:"レッカー",ja:"彼女は赤い車を持っている。"},
+ {en:"Take care!",f:"take care",k:"テイッケア",ja:"じゃあね、元気で!"},
+ {en:"Stop that!",f:"stop that",k:"スタッザッ",ja:"やめて!"}
+]},
+{id:"num",ic:"🔢",name:"数字・時刻・価格",sub:"13と30、canとcan't",
+ rule:"共通テストの図表問題は数字の聞き取りが勝負。<b>-teen(サーティーン)は後ろ</b>を、<b>-ty(サーリー)は前</b>を強く読む。<b>can(弱く短い)/ can't(強く長い)</b>も音の長さで区別する。",
+ items:[
+ {en:"It costs thirteen dollars.",f:"thirteen",k:"サー<b>ティーン</b>(後ろが強い)",ja:"13ドルです。",pair:"thirty"},
+ {en:"It costs thirty dollars.",f:"thirty",k:"<b>サー</b>リー(前が強い・tはラ行化)",ja:"30ドルです。",pair:"thirteen"},
+ {en:"She's fifteen years old.",f:"fifteen",k:"フィフ<b>ティーン</b>",ja:"彼女は15歳。",pair:"fifty"},
+ {en:"There were fifty people.",f:"fifty",k:"<b>フィフ</b>ティ",ja:"50人いた。",pair:"fifteen"},
+ {en:"I can go today.",f:"can",k:"クン(弱く短い=肯定)",ja:"今日行けるよ。",pair:"can't"},
+ {en:"I can't go today.",f:"can't",k:"キャーン(ッ)(強く長い=否定)",ja:"今日は行けない。",pair:"can"},
+ {en:"It starts at half past seven.",f:"half past seven",k:"=7時30分",ja:"7時半に始まる。"},
+ {en:"Let's meet at a quarter to six.",f:"a quarter to six",k:"=5時45分(6時まで15分)",ja:"5時45分に会おう。"},
+ {en:"The earphones are nine thousand yen.",f:"nine thousand yen",k:"=¥9,000",ja:"そのイヤホンは9千円。(第1回 問5)"},
+ {en:"It's twenty to nine.",f:"twenty to nine",k:"=8時40分(9時まで20分)",ja:"8時40分だ。"}
+]},
+{id:"real",ic:"🎯",name:"実戦・共通テスト頻出",sub:"第1回のカギ文で総仕上げ",
+ rule:"ここまでの音変化が<b>実際の試験音声</b>でどう組み合わさるかを体験する。すべて夏期講習第1回の正解のカギになった文。<b>1文の中に複数の音変化</b>が同時に起きるのが本番。",
+ items:[
+ {en:"I'll be back in time for dinner.",f:"back in time for",k:"バッキンタイムファ(連結+弱形)",ja:"夕食に間に合うように戻る。(問1)"},
+ {en:"It was too expensive.",f:"too expensive",k:"トゥーイクスペンスィヴ",ja:"高すぎた。→「買わなかった」と推論(問2)"},
+ {en:"He had no idea where he was.",f:"had no idea",k:"ハドノウアイディーア",ja:"自分がどこにいるか分からなかった=道に迷った(問3)"},
+ {en:"I cook only things that can be made quickly.",f:"can be made",k:"クンビメイド(弱形)",ja:"すぐ作れるものだけ料理する(問4)"},
+ {en:"Only the one with dots is sold out.",f:"sold out",k:"ソウルダウッ(連結)",ja:"水玉のものだけ売り切れ(問6)"},
+ {en:"His flight had already left.",f:"had already left",k:"ハドールレディレフト",ja:"彼の便はすでに出発していた(問7)"},
+ {en:"It doesn't require any equipment.",f:"doesn't require",k:"ダズンリクワイア(脱落)",ja:"器具を必要としない(問8)"},
+ {en:"Take a left turn over there.",f:"left turn over there",k:"レフターンノウヴァゼア",ja:"あそこで左折して(問11)"},
+ {en:"We're out of apple pie.",f:"out of",k:"アウロヴ(フラップT)",ja:"アップルパイは品切れ(問12)"},
+ {en:"I'll have coffee instead of tea.",f:"instead of",k:"インステロヴ(フラップT)",ja:"紅茶の代わりにコーヒーにする(問12)"}
+]}
+];
+
+/* ================= 状態 ================= */
+const KEY="onhenka_dojo_v1";
+let S=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{xp:0,rec:{},rate:1.0,voice:""}}catch(e){return{xp:0,rec:{},rate:1.0,voice:""}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function rec(id){return S.rec[id]||(S.rec[id]={c:0,t:0})}
+function itemId(ci,ii){return CATS[ci].id+"_"+ii}
+function mastered(id){const r=S.rec[id];return r&&r.c>=2}
+
+/* ================= TTS ================= */
+let VOICES=[];
+function loadVoices(){
+  VOICES=speechSynthesis.getVoices().filter(v=>v.lang.startsWith("en"));
+  const sel=document.getElementById("voiceSel");
+  sel.innerHTML=VOICES.map((v,i)=>`<option value="${i}">${v.name} (${v.lang})</option>`).join("");
+  if(S.voice){const i=VOICES.findIndex(v=>v.name===S.voice);if(i>=0)sel.value=i;}
+  else{
+    const pref=["Samantha","Karen","Daniel","Google US English","Google UK English Female"];
+    for(const p of pref){const i=VOICES.findIndex(v=>v.name.includes(p));if(i>=0){sel.value=i;break;}}
+  }
+}
+speechSynthesis.onvoiceschanged=loadVoices;
+function speak(text,slow,btn){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const vi=document.getElementById("voiceSel").value;
+  if(VOICES[vi])u.voice=VOICES[vi];
+  u.lang="en-US";
+  u.rate=slow?0.6:(S.rate||1.0);
+  if(btn){btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");u.onerror=()=>btn.classList.remove("playing");}
+  speechSynthesis.speak(u);
+}
+
+/* ================= 画面遷移 ================= */
+function go(s){
+  document.querySelectorAll(".screen").forEach(e=>e.classList.remove("on"));
+  document.getElementById("scr-"+s).classList.add("on");
+  document.getElementById("fb-home").classList.toggle("on",s==="home");
+  document.getElementById("fb-set").classList.toggle("on",s==="set");
+  if(s==="home")renderHome();
+  if(s==="set")renderStats();
+  window.scrollTo(0,0);
+}
+
+/* ================= ホーム ================= */
+function catProgress(ci){
+  const n=CATS[ci].items.length;
+  let m=0;for(let i=0;i<n;i++)if(mastered(itemId(ci,i)))m++;
+  return Math.round(m/n*100);
+}
+function renderHome(){
+  document.getElementById("xpVal").textContent=S.xp;
+  const g=document.getElementById("catGrid");
+  g.innerHTML=CATS.map((c,ci)=>{
+    const p=catProgress(ci);
+    return `<div class="cat" onclick="openCat(${ci})">
+      <div class="pct">${p}%</div>
+      <div class="ic">${c.ic}</div>
+      <div class="nm">${c.name}</div>
+      <div class="sub">${c.sub}</div>
+      <div class="bar"><b style="width:${p}%"></b></div>
+    </div>`;
+  }).join("");
+}
+
+/* ================= カテゴリ ================= */
+let CUR=0, MODE="learn", SHOWK=true, SHOWJ=true;
+function openCat(ci){
+  CUR=ci;MODE="learn";
+  document.getElementById("catTitle").innerHTML=CATS[ci].ic+" "+CATS[ci].name;
+  document.getElementById("catRule").innerHTML=CATS[ci].rule;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.m==="learn"));
+  renderBody();go("cat");
+}
+function setMode(m){
+  MODE=m;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.m===m));
+  renderBody();
+}
+function renderBody(){
+  const b=document.getElementById("catBody");
+  if(MODE==="learn")renderLearn(b);
+  else if(MODE==="dict")startDrill(b,"dict");
+  else startDrill(b,"quiz");
+}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function markFocus(en,f){
+  const i=en.toLowerCase().indexOf(f.toLowerCase());
+  if(i<0)return esc(en);
+  return esc(en.slice(0,i))+"<mark>"+esc(en.slice(i,i+f.length))+"</mark>"+esc(en.slice(i+f.length));
+}
+function renderLearn(b){
+  const c=CATS[CUR];
+  b.innerHTML=`<div class="toggler">
+    <button class="tg ${SHOWK?"on":""}" onclick="SHOWK=!SHOWK;renderBody()">カナ表示</button>
+    <button class="tg ${SHOWJ?"on":""}" onclick="SHOWJ=!SHOWJ;renderBody()">意味表示</button>
+  </div>`+c.items.map((it,ii)=>{
+    const id=itemId(CUR,ii);
+    return `<div class="item ${SHOWK?"showk":""} ${SHOWJ?"showj":""}">
+      <div class="en">${markFocus(it.en,it.f)}</div>
+      <div class="kana">${it.k}</div>
+      <div class="ja">${it.ja}</div>
+      <div class="ctr">
+        <button class="pbtn" onclick="speak('${it.en.replace(/'/g,"\\'")}',false,this)">▶ 再生</button>
+        <button class="pbtn" onclick="speak('${it.en.replace(/'/g,"\\'")}',true,this)">🐢 ゆっくり</button>
+        ${mastered(id)?'<span class="star">★</span>':''}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ================= ドリル(書き取り/聞き分け) ================= */
+let Q=[],QI=0,QOK=0,QKIND="dict",MIX=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startDrill(container,kind){
+  QKIND=kind;MIX=false;
+  Q=shuffle(CATS[CUR].items.map((it,ii)=>({...it,ci:CUR,ii}))).slice(0,5);
+  QI=0;QOK=0;
+  renderQ(container);
+}
+function startMix(){
+  QKIND="dict";MIX=true;
+  const all=[];CATS.forEach((c,ci)=>c.items.forEach((it,ii)=>all.push({...it,ci,ii})));
+  Q=shuffle(all).slice(0,10);QI=0;QOK=0;
+  openMixScreen();
+}
+function openMixScreen(){
+  CUR=-1;
+  document.getElementById("catTitle").innerHTML="🔥 実戦ミックステスト";
+  document.getElementById("catRule").innerHTML="全カテゴリから10問。<b>音声を聞いて空欄を書き取る</b>。本番と同じく、まず聞いてから考える。";
+  document.querySelector(".tabs").style.display="none";
+  renderQ(document.getElementById("catBody"));
+  go("cat");
+}
+function normalize(s){return s.toLowerCase().replace(/[.,!?'"‘’]/g,"").replace(/\s+/g," ").trim()}
+function renderQ(container){
+  if(CUR>=0)document.querySelector(".tabs").style.display="flex";
+  if(QI>=Q.length){renderDone(container);return}
+  const q=Q[QI];
+  if(QKIND==="dict"){
+    const cloze=markFocusCloze(q.en,q.f);
+    container.innerHTML=`<div class="drill">
+      <div class="prog">${QI+1} / ${Q.length} 問 ${MIX?("["+CATS[q.ci].name+"]"):""}</div>
+      <button class="bigplay" onclick="speak('${q.en.replace(/'/g,"\\'")}',false,null)">▶</button>
+      <button class="slowlink" onclick="speak('${q.en.replace(/'/g,"\\'")}',true,null)">🐢 ゆっくり聞く</button>
+      <div class="cloze">${cloze}</div>
+      <input class="ansin" id="ansIn" placeholder="空欄の英語を入力" autocomplete="off" autocapitalize="off">
+      <button class="judge" onclick="judgeDict()">答え合わせ</button>
+      <div class="result" id="res"></div>
+      <button class="nextb" id="nextB" onclick="nextQ()">次へ →</button>
+    </div>`;
+    setTimeout(()=>speak(q.en,false,null),300);
+  }else{
+    const pool=CATS[q.ci].items.filter(x=>x.f!==q.f);
+    let ds=shuffle([...pool]).slice(0,3).map(x=>x.f);
+    if(q.pair && !ds.includes(q.pair)){ds[0]=q.pair;}
+    const choices=shuffle([q.f,...ds]);
+    container.innerHTML=`<div class="drill">
+      <div class="prog">${QI+1} / ${Q.length} 問</div>
+      <button class="bigplay" onclick="speak('${q.en.replace(/'/g,"\\'")}',false,null)">▶</button>
+      <button class="slowlink" onclick="speak('${q.en.replace(/'/g,"\\'")}',true,null)">🐢 ゆっくり聞く</button>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:4px">聞こえたフレーズはどれ?</p>
+      <div class="choices">${choices.map(c=>`<button class="choice" onclick="judgeQuiz(this,'${c.replace(/'/g,"\\'")}')">${esc(c)}</button>`).join("")}</div>
+      <div class="result" id="res"></div>
+      <button class="nextb" id="nextB" onclick="nextQ()">次へ →</button>
+    </div>`;
+    setTimeout(()=>speak(q.en,false,null),300);
+  }
+}
+function markFocusCloze(en,f){
+  const i=en.toLowerCase().indexOf(f.toLowerCase());
+  if(i<0)return esc(en);
+  const blank="<u>"+"＿".repeat(Math.min(8,Math.max(3,Math.round(f.length/2))))+"</u>";
+  return esc(en.slice(0,i))+blank+esc(en.slice(i+f.length));
+}
+function judgeDict(){
+  const q=Q[QI];
+  const ans=normalize(document.getElementById("ansIn").value);
+  const ok=ans===normalize(q.f);
+  showResult(q,ok);
+}
+function judgeQuiz(btn,picked){
+  const q=Q[QI];
+  const ok=picked===q.f;
+  document.querySelectorAll(".choice").forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===q.f)b.classList.add("ok");
+    else if(b===btn&&!ok)b.classList.add("ng");
+  });
+  showResult(q,ok);
+}
+function showResult(q,ok){
+  const id=itemId(q.ci,q.ii);const r=rec(id);
+  r.t++;if(ok){r.c++;S.xp+=10;QOK++;}
+  save();document.getElementById("xpVal").textContent=S.xp;
+  const res=document.getElementById("res");
+  res.innerHTML=`<div class="verdict ${ok?"ok":"ng"}">${ok?"⭕ 正解! +10XP":"✖ おしい!"}</div>
+    <div class="full">${markFocus(q.en,q.f)}<br><span class="kn">${q.k}</span><br><span style="color:var(--muted);font-size:12.5px">${q.ja}</span></div>`;
+  res.classList.add("on");
+  document.getElementById("nextB").classList.add("on");
+  const jd=document.querySelector(".judge");if(jd)jd.style.display="none";
+  const ai=document.getElementById("ansIn");if(ai)ai.disabled=true;
+}
+function nextQ(){QI++;renderQ(document.getElementById("catBody"))}
+function renderDone(container){
+  const pct=Math.round(QOK/Q.length*100);
+  container.innerHTML=`<div class="donecard">
+    <div class="big">${pct===100?"🏆":pct>=70?"🎉":"💪"}</div>
+    <h3>${QOK} / ${Q.length} 問正解</h3>
+    <p>${pct===100?"完璧!この音はもう耳の反射になっている。":pct>=70?"いい調子。間違えた文だけ「学ぶ」タブでシャドーイングしよう。":"音変化は「知る→聞く→真似る」の3周で必ず取れるようになる。学ぶタブに戻って音を確認しよう。"}</p>
+    <button class="mixbtn" onclick="${MIX?"startMix()":"renderBody()"}">もう一度挑戦</button>
+    <button class="back" style="margin-top:10px" onclick="go('home')">ホームに戻る</button>
+  </div>`;
+}
+
+/* ================= 設定 ================= */
+document.getElementById("rateRange").addEventListener("input",e=>{
+  S.rate=parseFloat(e.target.value);
+  document.getElementById("rateVal").textContent=S.rate.toFixed(2);
+  save();
+});
+document.getElementById("voiceSel").addEventListener("change",e=>{
+  const v=VOICES[e.target.value];if(v){S.voice=v.name;save();}
+  speak("This is a test. Check it out.",false,null);
+});
+function renderStats(){
+  document.getElementById("rateRange").value=S.rate||1.0;
+  document.getElementById("rateVal").textContent=(S.rate||1.0).toFixed(2);
+  let m=0,total=0;
+  CATS.forEach((c,ci)=>c.items.forEach((it,ii)=>{total++;if(mastered(itemId(ci,ii)))m++;}));
+  document.getElementById("statText").innerHTML=
+    `習得(★)フレーズ: <b>${m} / ${total}</b><br>累計XP: <b>${S.xp}</b><br>※2回以上正解したフレーズに★がつきます。`;
+  loadVoices();
+}
+function resetProgress(){
+  if(confirm("学習記録(XP・★)をすべて消去します。よろしいですか?")){
+    S={xp:0,rec:{},rate:S.rate,voice:S.voice};save();renderStats();renderHome();
+  }
+}
+
+loadVoices();
+renderHome();
+</script>
+</body>
+</html>
