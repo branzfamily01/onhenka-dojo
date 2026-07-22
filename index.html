@@ -200,6 +200,10 @@ footer{
 .set-row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;font-size:13.5px}
 .set-row label{font-weight:700;display:block;margin-bottom:7px}
 .set-row select,.set-row input[type=range]{width:100%;font-size:14px;padding:8px;border-radius:8px;border:1px solid var(--line);font-family:inherit}
+#packIn{width:100%;min-height:110px;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:12px;font-family:ui-monospace,SFMono-Regular,monospace;resize:vertical}
+.packrow{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f6f9fb;border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-top:7px;font-size:12.5px}
+.packrow small{color:var(--muted)}
+.packrow button{border:1px solid var(--coral);color:var(--coral);background:none;border-radius:7px;padding:4px 11px;font-size:11.5px;font-family:inherit;cursor:pointer;flex-shrink:0}
 /* iPad・大画面 */
 @media (min-width:700px){
   main{max-width:900px;padding:20px 24px}
@@ -263,6 +267,12 @@ footer{
       <input type="range" id="rateRange" min="0.7" max="1.3" step="0.05" value="1.0">
     </div>
     <div class="set-row">
+      <label>📦 教材パック(JSONを貼り付け)</label>
+      <textarea id="packIn" placeholder='先生から配布されたJSONをここに貼り付けて「追加」を押してね'></textarea>
+      <button class="judge" style="margin-top:8px" onclick="addPack()">パックを追加 / 更新する</button>
+      <div id="packList"></div>
+    </div>
+    <div class="set-row">
       <label>学習記録</label>
       <div style="font-size:13px;color:var(--muted);line-height:1.7" id="statText"></div>
       <button class="danger" onclick="resetProgress()">記録をリセットする</button>
@@ -280,7 +290,7 @@ footer{
 /* ================= データ =================
    items: en=読み上げ文 / f=焦点フレーズ / k=カナ近似 / ja=意味 / pair=聞き分けペア(任意)
    カテゴリを増やす場合はこの配列に追記するだけでOK */
-const CATS=[
+const BASE_CATS=[
 {id:"link",ic:"🔗",name:"連結(リンキング)",sub:"子音+母音がつながる",
  rule:"単語の最後の<b>子音</b>と次の単語の<b>母音</b>がつながって1語のように聞こえる。<b>check it out → チェッキラウッ</b>。英語は単語ごとに切って発音されない、がすべての出発点。",
  items:[
@@ -424,12 +434,22 @@ const CATS=[
 ];
 
 /* ================= 状態 ================= */
+let CATS=BASE_CATS.slice();
 const KEY="onhenka_dojo_v1";
 let S=load();
 function load(){
   let s;try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){s={}}
-  return Object.assign({xp:0,rec:{},rate:1.0,voice:"",days:{},recov:0},s);
+  return Object.assign({xp:0,rec:{},rate:1.0,voice:"",days:{},recov:0,packs:[]},s);
 }
+function getPackCats(){
+  return (S.packs||[]).map(p=>({
+    id:"pk_"+p.id, ic:p.ic||"📦", name:p.name,
+    sub:p.sub||"先生が配布した教材パック",
+    rule:p.rule||"先生が配布した<b>教材パック</b>です。授業で扱った文を耳の反射になるまで回そう。",
+    items:p.items
+  }));
+}
+function rebuildCats(){CATS=BASE_CATS.slice();CATS.push(...getPackCats());}
 function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function logPractice(){
   const t=today();
@@ -802,6 +822,43 @@ function finishShadow(){
   res.classList.add("on");
 }
 
+/* ================= 教材パック ================= */
+function addPack(){
+  const t=document.getElementById("packIn").value.trim();
+  if(!t){alert("JSONを貼り付けてください");return}
+  let data;
+  try{data=JSON.parse(t)}catch(e){alert("JSONの形式にエラーがあります:\n"+e.message);return}
+  const arr=Array.isArray(data)?data:[data];
+  const errs=[];let added=0;
+  arr.forEach((p,i)=>{
+    if(!p||!p.id||!p.name||!Array.isArray(p.items)){errs.push(`${i+1}個目: id / name / items が必要です`);return}
+    if(p.items.length<4){errs.push(`${p.name}: itemsは4文以上必要です(聞き分けの4択のため)`);return}
+    const noEnF=p.items.find(it=>!it.en||!it.f);
+    if(noEnF){errs.push(`${p.name}: en(文)と f(焦点フレーズ)が無い項目があります`);return}
+    const fbad=p.items.filter(it=>it.en.toLowerCase().indexOf(it.f.toLowerCase())<0);
+    if(fbad.length){errs.push(`${p.name}: 「${fbad[0].f}」が en の文中に見つかりません(大文字小文字以外は完全一致が必要)`);return}
+    p.items.forEach(it=>{it.k=it.k||"";it.ja=it.ja||""});
+    S.packs=S.packs||[];
+    const ex=S.packs.findIndex(x=>x.id===p.id);
+    if(ex>=0)S.packs[ex]=p;else S.packs.push(p);
+    added++;
+  });
+  save();rebuildCats();renderPacks();
+  if(added)document.getElementById("packIn").value="";
+  alert((added?`✅ ${added}個のパックを追加/更新しました!ホームに表示されます。`:"追加できませんでした")+(errs.length?"\n\n⚠️ "+errs.join("\n"):""));
+}
+function delPack(i){
+  if(confirm(`「${S.packs[i].name}」を削除しますか?`)){
+    S.packs.splice(i,1);save();rebuildCats();renderPacks();
+  }
+}
+function renderPacks(){
+  const el=document.getElementById("packList");if(!el)return;
+  el.innerHTML=(S.packs&&S.packs.length)
+    ?S.packs.map((p,i)=>`<div class="packrow"><span>${p.ic||"📦"} ${p.name} <small>(${p.items.length}文)</small></span><button onclick="delPack(${i})">削除</button></div>`).join("")
+    :'<div style="font-size:12px;color:var(--muted);margin-top:7px">まだパックはありません。先生から配布されたJSONを上に貼り付けてね。</div>';
+}
+
 /* ================= 設定 ================= */
 document.getElementById("rateRange").addEventListener("input",e=>{
   S.rate=parseFloat(e.target.value);
@@ -819,6 +876,7 @@ function renderStats(){
   CATS.forEach((c,ci)=>c.items.forEach((it,ii)=>{total++;if(mastered(itemId(ci,ii)))m++;}));
   document.getElementById("statText").innerHTML=
     `習得(★)フレーズ: <b>${m} / ${total}</b><br>累計XP: <b>${S.xp}</b><br>※2回以上正解したフレーズに★がつきます。`;
+  renderPacks();
   loadVoices();
 }
 function resetProgress(){
@@ -828,6 +886,7 @@ function resetProgress(){
 }
 
 loadVoices();
+rebuildCats();
 renderHome();
 // PWA: オフライン起動用サービスワーカー
 if("serviceWorker" in navigator){
