@@ -1,0 +1,20 @@
+■ 音変化道場 PWA一式(v2)
+
+【アップロード方法】
+GitHubのリポジトリ(onhenka-dojo)で
+Add file → Upload files → この5ファイルをまとめて選択 → Commit changes
+
+・index.html      … アプリ本体(上書き)
+・manifest.json   … アプリ名・アイコン定義
+・sw.js           … オフライン起動用
+・icon-180.png    … ホーム画面アイコン(iPhone/iPad用)
+・icon-512.png    … ホーム画面アイコン(高解像度)
+
+※「はじめに.txt」はアップロード不要です。
+
+【生徒への案内】
+1. Safariで https://branzfamily01.github.io/onhenka-dojo/ を開く
+2. 共有ボタン(□↑)→「ホーム画面に追加」
+3. ホーム画面の「音変化道場」から起動
+・録音を使うときはマイクの「許可」を押す
+・お手本と自分の声が混ざらないようイヤホン推奨

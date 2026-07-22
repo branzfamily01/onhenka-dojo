@@ -2,8 +2,15 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>音変化道場 — 英語リスニング基礎トレーニング</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="音変化道場">
+<meta name="theme-color" content="#16324f">
+<link rel="apple-touch-icon" href="icon-180.png">
 <style>
 :root{
   --ink:#16324f;
@@ -23,7 +30,7 @@ body{
   min-height:100vh;padding-bottom:70px;
 }
 header{
-  background:var(--ink);color:#fff;padding:14px 16px 12px;
+  background:var(--ink);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 12px;
   position:sticky;top:0;z-index:50;
   display:flex;align-items:center;justify-content:space-between;
 }
@@ -149,6 +156,40 @@ main{padding:14px 14px 20px;max-width:640px;margin:0 auto}
   font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;
 }
 .tg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.daily{
+  background:linear-gradient(135deg,#16324f,#0e9594);color:#fff;border-radius:14px;
+  padding:14px 15px;margin-bottom:12px;cursor:pointer;
+}
+.daily .dl{font-size:11px;opacity:.85;font-weight:700;letter-spacing:.05em;margin-bottom:4px}
+.daily .den{font-size:16px;font-weight:700;line-height:1.5;font-family:Georgia,serif}
+.daily .dgo{font-size:12px;margin-top:7px;background:rgba(255,255,255,.18);display:inline-block;border-radius:12px;padding:3px 12px;font-weight:700}
+.pstat{display:flex;gap:8px;margin-bottom:12px}
+.pstat div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:9px 6px;text-align:center}
+.pstat b{display:block;font-size:18px;color:var(--teal-dark)}
+.pstat span{font-size:10px;color:var(--muted);font-weight:600}
+.shbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 15px}
+.shnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.shnav button{background:#e7eef3;border:none;border-radius:8px;padding:7px 13px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit}
+.shnav .cnt{font-size:12px;color:var(--muted);font-weight:600}
+.shsent{font-size:17px;font-weight:600;line-height:1.6;text-align:center;margin:6px 0 2px}
+.shsent mark{background:#fff3c9;padding:0 2px;border-radius:3px}
+.shkana{text-align:center;color:var(--coral);font-weight:700;font-size:13px;margin-bottom:10px}
+.shrow{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.spdsel{border:1px solid var(--line);border-radius:9px;padding:7px 8px;font-size:12.5px;font-family:inherit;background:#f6f9fb;font-weight:600}
+.recbtn{
+  width:100%;margin-top:10px;border:none;border-radius:12px;padding:14px;font-size:15px;
+  font-weight:800;cursor:pointer;font-family:inherit;background:var(--coral);color:#fff;
+}
+.recbtn.rec{background:#b3261e;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.selfcheck{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;text-align:left}
+.selfcheck h4{font-size:13px;margin-bottom:8px}
+.checkrow{display:flex;align-items:center;gap:9px;background:#f6f9fb;border-radius:10px;padding:10px 11px;margin-bottom:7px;font-size:13px;font-weight:600;cursor:pointer}
+.checkrow input{width:19px;height:19px;accent-color:var(--teal)}
+.guide{background:#fbf7ec;border:1px solid #e5d9b8;border-radius:12px;padding:12px 13px;font-size:12.5px;line-height:1.8;margin-bottom:12px}
+.guide summary{font-weight:800;cursor:pointer;font-size:13px}
+.guide ol{margin:8px 0 0 18px}
+.guide li{margin-bottom:4px}
 footer{
   position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
   display:flex;justify-content:space-around;padding:8px 0 max(8px, env(safe-area-inset-bottom));z-index:50;
@@ -159,6 +200,19 @@ footer{
 .set-row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;font-size:13.5px}
 .set-row label{font-weight:700;display:block;margin-bottom:7px}
 .set-row select,.set-row input[type=range]{width:100%;font-size:14px;padding:8px;border-radius:8px;border:1px solid var(--line);font-family:inherit}
+/* iPad・大画面 */
+@media (min-width:700px){
+  main{max-width:900px;padding:20px 24px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:14px}
+  .cat .nm{font-size:15px}
+  .cat .sub{font-size:11.5px}
+  .shbox,.drill{max-width:640px;margin:0 auto}
+  .daily,.pstat,.mixbtn{max-width:900px}
+  body{font-size:15px}
+}
+@media (min-width:1000px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+}
 .danger{color:var(--coral);background:none;border:1px solid var(--coral);border-radius:10px;padding:10px;width:100%;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px}
 .notice{font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:12px}
 </style>
@@ -173,6 +227,12 @@ footer{
   <!-- ホーム -->
   <section class="screen on" id="scr-home">
     <p class="intro">日本人が聞き取れない原因の9割は「知らない単語」ではなく「知っている単語の音の変化」。10のカテゴリを何度も回して、耳の反射を作ろう。</p>
+    <div class="daily" id="dailyCard"></div>
+    <div class="pstat">
+      <div><b id="stToday">0</b><span>今日の練習</span></div>
+      <div><b id="stDays">0</b><span>練習した日数</span></div>
+      <div><b id="stRecov">0</b><span>復帰回数 🔁</span></div>
+    </div>
     <div class="grid" id="catGrid"></div>
     <button class="mixbtn" onclick="startMix()">🔥 実戦ミックステスト<small>全カテゴリから10問ランダム出題(書き取り)</small></button>
   </section>
@@ -184,8 +244,9 @@ footer{
     <div class="rule" id="catRule"></div>
     <div class="tabs">
       <button class="tab on" data-m="learn" onclick="setMode('learn')">📖 学ぶ</button>
-      <button class="tab" data-m="dict" onclick="setMode('dict')">✍️ 書き取り</button>
-      <button class="tab" data-m="quiz" onclick="setMode('quiz')">👂 聞き分け</button>
+      <button class="tab" data-m="dict" onclick="setMode('dict')">✍️ 書取</button>
+      <button class="tab" data-m="quiz" onclick="setMode('quiz')">👂 聞分</button>
+      <button class="tab" data-m="shadow" onclick="setMode('shadow')">🎤 シャドー</button>
     </div>
     <div id="catBody"></div>
   </section>
@@ -365,7 +426,24 @@ const CATS=[
 /* ================= 状態 ================= */
 const KEY="onhenka_dojo_v1";
 let S=load();
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||{xp:0,rec:{},rate:1.0,voice:""}}catch(e){return{xp:0,rec:{},rate:1.0,voice:""}}}
+function load(){
+  let s;try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){s={}}
+  return Object.assign({xp:0,rec:{},rate:1.0,voice:"",days:{},recov:0},s);
+}
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function logPractice(){
+  const t=today();
+  const keys=Object.keys(S.days).sort();
+  if(!S.days[t]){
+    const last=keys[keys.length-1];
+    if(last){
+      const gap=Math.round((new Date(t)-new Date(last))/86400000);
+      if(gap>=2)S.recov++; // サボり明けに戻ってきたら復帰カウント+1
+    }
+    S.days[t]=0;
+  }
+  S.days[t]++;save();
+}
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
 function rec(id){return S.rec[id]||(S.rec[id]={c:0,t:0})}
 function itemId(ci,ii){return CATS[ci].id+"_"+ii}
@@ -412,8 +490,22 @@ function catProgress(ci){
   let m=0;for(let i=0;i<n;i++)if(mastered(itemId(ci,i)))m++;
   return Math.round(m/n*100);
 }
+function dailyPick(){
+  const t=today();let h=0;for(const ch of t)h=(h*31+ch.charCodeAt(0))>>>0;
+  const all=[];CATS.forEach((c,ci)=>c.items.forEach((it,ii)=>all.push({ci,ii})));
+  return all[h%all.length];
+}
 function renderHome(){
   document.getElementById("xpVal").textContent=S.xp;
+  const dp=dailyPick(),dit=CATS[dp.ci].items[dp.ii];
+  document.getElementById("dailyCard").innerHTML=
+    `<div class="dl">📅 今日の1文 — ${CATS[dp.ci].name}</div>
+     <div class="den">${esc(dit.en)}</div>
+     <div class="dgo">🎤 シャドーイングする →</div>`;
+  document.getElementById("dailyCard").onclick=()=>{openCat(dp.ci);setMode("shadow");SHI=dp.ii;renderBody();};
+  document.getElementById("stToday").textContent=S.days[today()]||0;
+  document.getElementById("stDays").textContent=Object.keys(S.days).length;
+  document.getElementById("stRecov").textContent=S.recov;
   const g=document.getElementById("catGrid");
   g.innerHTML=CATS.map((c,ci)=>{
     const p=catProgress(ci);
@@ -445,7 +537,8 @@ function renderBody(){
   const b=document.getElementById("catBody");
   if(MODE==="learn")renderLearn(b);
   else if(MODE==="dict")startDrill(b,"dict");
-  else startDrill(b,"quiz");
+  else if(MODE==="quiz")startDrill(b,"quiz");
+  else renderShadow(b);
 }
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 function markFocus(en,f){
@@ -577,6 +670,138 @@ function renderDone(container){
   </div>`;
 }
 
+/* ================= シャドーイング ================= */
+let SHI=0, recStream=null, recorder=null, recChunks=[], recBlob=null, recURL=null, isRec=false;
+const CHECKS=[
+  "焦点フレーズの<b>音変化を再現</b>できた(カナ表記の音になっている)",
+  "お手本の<b>スピードに遅れず</b>ついていけた",
+  "最後まで<b>止まらずに</b>言い切れた"
+];
+function renderShadow(b){
+  const c=CATS[CUR];if(SHI>=c.items.length)SHI=0;
+  const it=c.items[SHI];
+  b.innerHTML=`
+  <details class="guide"><summary>🥋 シャドーイングの正しい手順(最初に読む)</summary>
+    <ol>
+      <li><b>聞く</b>:何も見ずに2回聞き、意味と音の流れをつかむ</li>
+      <li><b>オーバーラッピング</b>:文を見ながら音声と同時に読む(2〜3回)</li>
+      <li><b>シャドーイング</b>:文を見ずに、聞こえた0.5秒後を影のように追いかける</li>
+      <li><b>録音して聞き比べ</b>:お手本と自分の差を「音変化ができているか」で確認する</li>
+      <li><b>セルフ添削</b>:下のチェック3項目で自己評価。できなかった項目だけ意識してもう1回</li>
+    </ol>
+    聞こえていない音は、聞こえていないこと自体に気づけない。だから録音して<b>自分の耳で添削</b>する。
+  </details>
+  <div class="shbox">
+    <div class="shnav">
+      <button onclick="SHI=(SHI-1+${c.items.length})%${c.items.length};stopAllRec();renderShadow(document.getElementById('catBody'))">← 前</button>
+      <span class="cnt">${SHI+1} / ${c.items.length}</span>
+      <button onclick="SHI=(SHI+1)%${c.items.length};stopAllRec();renderShadow(document.getElementById('catBody'))">次 →</button>
+    </div>
+    <div class="shsent">${markFocus(it.en,it.f)}</div>
+    <div class="shkana">${it.k}</div>
+    <div class="shrow">
+      <select class="spdsel" id="shRate">
+        <option value="0.6">🐢 0.6倍</option>
+        <option value="0.8">0.8倍</option>
+        <option value="1.0" selected>▶ 1.0倍</option>
+        <option value="1.15">1.15倍</option>
+      </select>
+      <button class="pbtn" onclick="shSpeak(1)">▶ お手本</button>
+      <button class="pbtn" onclick="shSpeak(3)">🔁 3回連続</button>
+    </div>
+    <button class="recbtn" id="recBtn" onclick="toggleRec()">🎤 録音してシャドーイング</button>
+    <div class="shrow" id="recRow" style="display:none">
+      <button class="pbtn" onclick="playRec()">🗣 自分の声</button>
+      <button class="pbtn" onclick="compareRec()">⚖️ お手本→自分</button>
+      <button class="pbtn" onclick="shareRec()">📤 先生に提出</button>
+    </div>
+    <audio id="recAudio" style="display:none"></audio>
+    <div class="selfcheck" id="selfCheck" style="display:none">
+      <h4>✅ セルフ添削(できたら✓)</h4>
+      ${CHECKS.map((t,i)=>`<label class="checkrow"><input type="checkbox" id="ck${i}">${t}</label>`).join("")}
+      <button class="judge" onclick="finishShadow()">添削を記録する(✓×5XP)</button>
+      <div class="result" id="shRes"></div>
+    </div>
+  </div>`;
+}
+function shSpeak(times){
+  const it=CATS[CUR].items[SHI];
+  const rate=parseFloat(document.getElementById("shRate").value);
+  speechSynthesis.cancel();let n=0;
+  const one=()=>{
+    const u=new SpeechSynthesisUtterance(it.en);
+    const vi=document.getElementById("voiceSel").value;
+    if(VOICES[vi])u.voice=VOICES[vi];
+    u.lang="en-US";u.rate=rate;
+    u.onend=()=>{n++;if(n<times)setTimeout(one,700)};
+    speechSynthesis.speak(u);
+  };one();
+}
+async function toggleRec(){
+  const btn=document.getElementById("recBtn");
+  if(isRec){recorder.stop();isRec=false;btn.textContent="🎤 録音してシャドーイング";btn.classList.remove("rec");return}
+  try{recStream=await navigator.mediaDevices.getUserMedia({audio:true})}
+  catch(e){alert("マイクの使用を許可してください(設定 > Safari > マイク)");return}
+  recChunks=[];
+  let mime="";
+  if(window.MediaRecorder){
+    if(MediaRecorder.isTypeSupported("audio/mp4"))mime="audio/mp4";
+    else if(MediaRecorder.isTypeSupported("audio/webm"))mime="audio/webm";
+  }else{alert("この端末は録音に対応していません");return}
+  recorder=mime?new MediaRecorder(recStream,{mimeType:mime}):new MediaRecorder(recStream);
+  recorder.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data)};
+  recorder.onstop=()=>{
+    recBlob=new Blob(recChunks,{type:recorder.mimeType||"audio/mp4"});
+    if(recURL)URL.revokeObjectURL(recURL);
+    recURL=URL.createObjectURL(recBlob);
+    document.getElementById("recAudio").src=recURL;
+    document.getElementById("recRow").style.display="flex";
+    document.getElementById("selfCheck").style.display="block";
+    recStream.getTracks().forEach(t=>t.stop());
+  };
+  recorder.start();isRec=true;
+  btn.textContent="⏹ 録音を止める";btn.classList.add("rec");
+  shSpeak(1); // お手本を流しながら影で追いかける
+}
+function stopAllRec(){
+  if(isRec&&recorder){recorder.stop();isRec=false}
+  speechSynthesis.cancel();
+}
+function playRec(){document.getElementById("recAudio").play()}
+function compareRec(){
+  const it=CATS[CUR].items[SHI];
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(it.en);
+  const vi=document.getElementById("voiceSel").value;
+  if(VOICES[vi])u.voice=VOICES[vi];
+  u.lang="en-US";u.rate=parseFloat(document.getElementById("shRate").value);
+  u.onend=()=>setTimeout(()=>document.getElementById("recAudio").play(),400);
+  speechSynthesis.speak(u);
+}
+async function shareRec(){
+  if(!recBlob)return;
+  const ext=(recBlob.type||"").includes("webm")?"webm":"m4a";
+  const it=CATS[CUR].items[SHI];
+  const name=`shadow_${today()}_${CATS[CUR].id}${SHI+1}.${ext}`;
+  const file=new File([recBlob],name,{type:recBlob.type});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:"シャドーイング提出",text:it.en})}catch(e){}
+  }else{
+    const a=document.createElement("a");a.href=recURL;a.download=name;a.click();
+    alert("録音を保存しました。LINEやフォームから先生に送ってください。");
+  }
+}
+function finishShadow(){
+  const it=CATS[CUR].items[SHI];
+  const n=CHECKS.reduce((s,_,i)=>s+(document.getElementById("ck"+i).checked?1:0),0);
+  S.xp+=n*5;logPractice();save();
+  document.getElementById("xpVal").textContent=S.xp;
+  const res=document.getElementById("shRes");
+  res.innerHTML=`<div class="verdict ${n===3?"ok":""}">${n===3?"⭕ 3項目クリア!":"📝 記録しました"} +${n*5}XP</div>
+    <div class="full">${n===3?"次の文へ進もう。":"✓がつかなかった項目だけ意識して、もう一度🎤を押そう。同じ文を2〜3回やるのが一番伸びる。"}</div>`;
+  res.classList.add("on");
+}
+
 /* ================= 設定 ================= */
 document.getElementById("rateRange").addEventListener("input",e=>{
   S.rate=parseFloat(e.target.value);
@@ -604,6 +829,10 @@ function resetProgress(){
 
 loadVoices();
 renderHome();
+// PWA: オフライン起動用サービスワーカー
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("./sw.js").catch(()=>{});
+}
 </script>
 </body>
 </html>
