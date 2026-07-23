@@ -200,7 +200,7 @@ footer{
 .set-row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;font-size:13.5px}
 .set-row label{font-weight:700;display:block;margin-bottom:7px}
 .set-row select,.set-row input[type=range]{width:100%;font-size:14px;padding:8px;border-radius:8px;border:1px solid var(--line);font-family:inherit}
-#packIn{width:100%;min-height:110px;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:12px;font-family:ui-monospace,SFMono-Regular,monospace;resize:vertical}
+#packIn,#bkArea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:12px;font-family:ui-monospace,SFMono-Regular,monospace;resize:vertical}
 .packrow{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f6f9fb;border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-top:7px;font-size:12.5px}
 .packrow small{color:var(--muted)}
 .packrow button{border:1px solid var(--coral);color:var(--coral);background:none;border-radius:7px;padding:4px 11px;font-size:11.5px;font-family:inherit;cursor:pointer;flex-shrink:0}
@@ -265,6 +265,17 @@ footer{
     <div class="set-row">
       <label>通常再生の速さ: <span id="rateVal">1.0</span></label>
       <input type="range" id="rateRange" min="0.7" max="1.3" step="0.05" value="1.0">
+    </div>
+    <div class="set-row">
+      <label>💾 バックアップ・引っこし</label>
+      <textarea id="bkArea" placeholder="「書き出す」を押すとここにデータが出ます。新しい端末では、保存しておいたデータをここに貼り付けて「読み込む」を押してね"></textarea>
+      <div style="display:flex;gap:7px;margin-top:8px;flex-wrap:wrap">
+        <button class="pbtn" onclick="bkExport()">📤 書き出す</button>
+        <button class="pbtn" onclick="bkCopy()">📋 コピー</button>
+        <button class="pbtn" onclick="bkShare()">✈️ ファイルで共有</button>
+      </div>
+      <button class="judge" style="margin-top:8px" onclick="bkImport()">📥 貼り付けたデータを読み込む</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6">※ XP・★・練習記録・教材パックがまるごと保存されます。読み込むと今の記録は置き換わります。</p>
     </div>
     <div class="set-row">
       <label>📦 教材パック(JSONを貼り付け)</label>
@@ -820,6 +831,49 @@ function finishShadow(){
   res.innerHTML=`<div class="verdict ${n===3?"ok":""}">${n===3?"⭕ 3項目クリア!":"📝 記録しました"} +${n*5}XP</div>
     <div class="full">${n===3?"次の文へ進もう。":"✓がつかなかった項目だけ意識して、もう一度🎤を押そう。同じ文を2〜3回やるのが一番伸びる。"}</div>`;
   res.classList.add("on");
+}
+
+/* ================= バックアップ ================= */
+function bkExport(){
+  const j={app:"onhenka-dojo",v:2,exported:new Date().toISOString(),data:S};
+  document.getElementById("bkArea").value=JSON.stringify(j);
+}
+function bkCopy(){
+  const a=document.getElementById("bkArea");
+  if(!a.value)bkExport();
+  a.focus();a.select();a.setSelectionRange(0,9999999);
+  const done=()=>alert("📋 コピーしました!メモアプリやLINEの自分用トークに貼って保存してね");
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(a.value).then(done).catch(()=>{document.execCommand("copy");done()});
+  }else{document.execCommand("copy");done();}
+}
+async function bkShare(){
+  bkExport();
+  const v=document.getElementById("bkArea").value;
+  const name=`onhenka-backup_${today()}.json`;
+  const f=new File([v],name,{type:"application/json"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){
+    try{await navigator.share({files:[f],title:"音変化道場バックアップ"})}catch(e){}
+  }else{
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([v],{type:"application/json"}));
+    a.download=name;a.click();
+    alert("ファイルを保存しました。新しい端末に送っておいてね");
+  }
+}
+function bkImport(){
+  const t=document.getElementById("bkArea").value.trim();
+  if(!t){alert("バックアップデータを貼り付けてから押してください");return}
+  let j;try{j=JSON.parse(t)}catch(e){alert("データの形式にエラーがあります:\n"+e.message);return}
+  const d=(j&&j.app==="onhenka-dojo"&&j.data)?j.data
+        :(j&&j.rec&&typeof j.xp!=="undefined")?j:null;
+  if(!d){alert("音変化道場のバックアップデータではないようです");return}
+  if(!confirm(`このバックアップで置き換えます。\nXP: ${d.xp||0} / パック: ${(d.packs||[]).length}個\nよろしいですか?`))return;
+  S=Object.assign({xp:0,rec:{},rate:1.0,voice:"",days:{},recov:0,packs:[]},d);
+  save();rebuildCats();renderStats();renderHome();
+  document.getElementById("xpVal").textContent=S.xp;
+  document.getElementById("bkArea").value="";
+  alert("✅ 読み込みました!おかえりなさい。");
 }
 
 /* ================= 教材パック ================= */
