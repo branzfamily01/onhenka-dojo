@@ -279,7 +279,13 @@ footer{
       <p style="font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6">※ XP・★・練習記録・教材パックがまるごと保存されます。読み込むと今の記録は置き換わります。</p>
     </div>
     <div class="set-row">
-      <label>📦 教材パック(JSONを貼り付け)</label>
+      <label>📚 先生から配信中の教材パック</label>
+      <div id="srvList"></div>
+      <button class="pbtn" style="margin-top:8px;width:100%" onclick="reloadServerPacks()">🔄 最新のパックを取り込む</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6">※ アプリを開くたびに自動で最新になります。貼り付け作業は不要です。</p>
+    </div>
+    <div class="set-row">
+      <label>📦 自分でパックを追加(JSONを貼り付け)</label>
       <textarea id="packIn" placeholder='先生から配布されたJSONをここに貼り付けて「追加」を押してね'></textarea>
       <button class="judge" style="margin-top:8px" onclick="addPack()">パックを追加 / 更新する</button>
       <div id="packList"></div>
@@ -451,17 +457,44 @@ const KEY="onhenka_dojo_v1";
 let S=load();
 function load(){
   let s;try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){s={}}
-  return Object.assign({xp:0,rec:{},rate:1.25,voice:"",days:{},recov:0,packs:[]},s);
+  return Object.assign({xp:0,rec:{},rate:1.25,voice:"",days:{},recov:0,packs:[],spacks:[]},s);
 }
-function getPackCats(){
-  return (S.packs||[]).map(p=>({
+function toCat(p,fromServer){
+  return {
     id:"pk_"+p.id, ic:p.ic||"📦", name:p.name,
-    sub:p.sub||"先生が配布した教材パック",
+    sub:p.sub||(fromServer?"先生から配信された教材パック":"先生が配布した教材パック"),
     rule:p.rule||"先生が配布した<b>教材パック</b>です。授業で扱った文を耳の反射になるまで回そう。",
     items:p.items
-  }));
+  };
 }
-function rebuildCats(){CATS=BASE_CATS.slice();CATS.push(...getPackCats());}
+/* 配信パック(packs.json)と自分で貼ったパックを、idで重複排除して合成 */
+function rebuildCats(){
+  const srv=S.spacks||[], usr=S.packs||[];
+  const srvIds=new Set(srv.map(p=>p.id));
+  CATS=BASE_CATS.slice();
+  CATS.push(...srv.map(p=>toCat(p,true)));
+  CATS.push(...usr.filter(p=>!srvIds.has(p.id)).map(p=>toCat(p,false)));
+}
+function validPack(p){
+  return !!(p && p.id && p.name && Array.isArray(p.items) && p.items.length>=4
+    && !p.items.some(it=>!it.en||!it.f||it.en.toLowerCase().indexOf(it.f.toLowerCase())<0));
+}
+/* 起動時に先生の配信パックを取りに行く(無ければ何もしない・オフラインでも前回分で動く) */
+async function loadServerPacks(silent){
+  try{
+    const res=await fetch("./packs.json?t="+Date.now(),{cache:"no-store"});
+    if(!res.ok)throw 0;
+    const data=await res.json();
+    const arr=(Array.isArray(data)?data:[data]).filter(validPack);
+    if(!arr.length)throw 0;
+    arr.forEach(p=>p.items.forEach(it=>{it.k=it.k||"";it.ja=it.ja||""}));
+    S.spacks=arr;save();rebuildCats();renderHome();renderPacks();
+    if(!silent)alert(`✅ 最新の教材パック${arr.length}個を取り込みました!`);
+  }catch(e){
+    if(!silent)alert("配信パックが見つかりませんでした。電波の良い場所でもう一度試してください。");
+  }
+}
+function reloadServerPacks(){loadServerPacks(false)}
 function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function logPractice(){
   const t=today();
@@ -909,10 +942,20 @@ function delPack(i){
   }
 }
 function renderPacks(){
+  const sv=document.getElementById("srvList");
+  if(sv){
+    sv.innerHTML=(S.spacks&&S.spacks.length)
+      ?S.spacks.map(p=>`<div class="packrow"><span>${p.ic||"📦"} ${p.name} <small>(${p.items.length}文)</small></span><small style="color:var(--teal-dark);font-weight:700">配信中</small></div>`).join("")
+      :'<div style="font-size:12px;color:var(--muted);margin-top:7px">まだ配信パックはありません。下の「最新のパックを取り込む」を押すか、通信できる場所でアプリを開き直してください。</div>';
+  }
   const el=document.getElementById("packList");if(!el)return;
+  const srvIds=new Set((S.spacks||[]).map(p=>p.id));
   el.innerHTML=(S.packs&&S.packs.length)
-    ?S.packs.map((p,i)=>`<div class="packrow"><span>${p.ic||"📦"} ${p.name} <small>(${p.items.length}文)</small></span><button onclick="delPack(${i})">削除</button></div>`).join("")
-    :'<div style="font-size:12px;color:var(--muted);margin-top:7px">まだパックはありません。先生から配布されたJSONを上に貼り付けてね。</div>';
+    ?S.packs.map((p,i)=>{
+        const dup=srvIds.has(p.id);
+        return `<div class="packrow"><span>${p.ic||"📦"} ${p.name} <small>(${p.items.length}文)${dup?" — 配信版と同じため非表示":""}</small></span><button onclick="delPack(${i})">削除</button></div>`;
+      }).join("")
+    :'<div style="font-size:12px;color:var(--muted);margin-top:7px">自分で追加したパックはありません(ふつうは配信パックだけで大丈夫です)。</div>';
 }
 
 /* ================= 設定 ================= */
@@ -944,6 +987,7 @@ function resetProgress(){
 loadVoices();
 rebuildCats();
 renderHome();
+loadServerPacks(true); // 起動のたびに先生の最新パックを静かに取り込む
 // PWA: オフライン起動用サービスワーカー
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("./sw.js").catch(()=>{});

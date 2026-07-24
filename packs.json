@@ -1,0 +1,464 @@
+[
+ {
+  "id": "reach30-01a",
+  "name": "第1回・対話実戦(問9〜14)",
+  "ic": "💬",
+  "sub": "夏期講習第1回の対話文から抽出",
+  "rule": "夏期講習第1回の<b>第2問・第3問の対話文</b>から、正解のカギになった文を抽出。買い物・注文・道案内など<b>会話のやり取りで必ず出る音変化</b>を耳の反射にする。",
+  "items": [
+   {
+    "en": "You mean the one with stripes?",
+    "f": "the one with stripes",
+    "k": "ザワンウィズストライプス",
+    "ja": "ストライプ柄のもののこと?(問9)"
+   },
+   {
+    "en": "Wait, that one at the other end is nicer, isn't it?",
+    "f": "at the other end",
+    "k": "アッジアザレンド(連結)",
+    "ja": "もう片方の端のやつの方が素敵じゃない?(問9)"
+   },
+   {
+    "en": "I was just thinking that.",
+    "f": "just thinking that",
+    "k": "ジャスシンキンザッ(脱落)",
+    "ja": "ちょうどそう思ってたの(問9)"
+   },
+   {
+    "en": "You look good in it!",
+    "f": "look good in it",
+    "k": "ルッグッディニッ(連結)",
+    "ja": "よく似合ってるよ!(問10)"
+   },
+   {
+    "en": "I got this for my birthday.",
+    "f": "got this for",
+    "k": "ガッディスファ(弱形)",
+    "ja": "誕生日にもらったの(問10)"
+   },
+   {
+    "en": "One is next to the park, and the other is opposite the bookstore.",
+    "f": "next to the park",
+    "k": "ネクストゥザパーク(tが1つ消える)",
+    "ja": "1つは公園の隣、もう1つは本屋の向かい(問11)"
+   },
+   {
+    "en": "Are you ready to order, ma'am?",
+    "f": "ready to order",
+    "k": "レリロオーダー(フラップT)",
+    "ja": "ご注文はお決まりですか(問12)"
+   },
+   {
+    "en": "Could I have a slice of apple pie and tea, please?",
+    "f": "could I have",
+    "k": "クダイハヴ(連結)",
+    "ja": "アップルパイと紅茶をいただけますか(問12)"
+   },
+   {
+    "en": "Do you know when the next bus to the station is?",
+    "f": "the next bus",
+    "k": "ザネクスバス(tが消える)",
+    "ja": "次のバスはいつか分かりますか(問13)"
+   },
+   {
+    "en": "At one thirty, so in forty minutes.",
+    "f": "one thirty",
+    "k": "ワンサーリー(30=前が強い)",
+    "ja": "1時30分、あと40分後です(問13)"
+   },
+   {
+    "en": "They didn't fit her.",
+    "f": "didn't fit her",
+    "k": "ディドゥンフィター(hが消える)",
+    "ja": "彼女にはサイズが合わなかった(問14)"
+   },
+   {
+    "en": "Can I check the receipt, please?",
+    "f": "can I check",
+    "k": "キャナイチェック(連結)",
+    "ja": "レシートを確認してもいいですか(問14)"
+   }
+  ]
+ },
+ {
+  "id": "reach30-01b",
+  "name": "第1回・数字と講義(問15〜第5問)",
+  "ic": "🏛️",
+  "sub": "料金・条件・講義の音に慣れる",
+  "rule": "第3問後半〜<b>第4問B(修理業者)・第5問(腕時計の講義)</b>から抽出。<b>数字・料金・講義特有の言い回し</b>は、1回読みパートで差がつくポイント。",
+  "items": [
+   {
+    "en": "What about the view from our room?",
+    "f": "what about the",
+    "k": "ワラバウザ(フラップT)",
+    "ja": "部屋からの眺めはどう?(問15)"
+   },
+   {
+    "en": "There's nothing to do around here.",
+    "f": "nothing to do",
+    "k": "ナッシントゥドゥ",
+    "ja": "この辺りには何もすることがない(問15)"
+   },
+   {
+    "en": "I'll call her right away.",
+    "f": "call her right away",
+    "k": "コーラーライタウェイ(hが消える)",
+    "ja": "すぐ彼女に電話するわ(問16)"
+   },
+   {
+    "en": "It's a little out of my reach.",
+    "f": "out of my reach",
+    "k": "アウロヴマイリーチ(フラップT)",
+    "ja": "ちょっと手が届かないな(問17)"
+   },
+   {
+    "en": "We will have to keep yours for five days.",
+    "f": "have to keep",
+    "k": "ハフタキープ(縮約)",
+    "ja": "5日間お預かりすることになります(第4問B)"
+   },
+   {
+    "en": "You will have to pay an extra charge of 70 dollars.",
+    "f": "an extra charge",
+    "k": "アネクストラチャージ(連結)",
+    "ja": "追加料金70ドルをお支払いいただきます(第4問B)"
+   },
+   {
+    "en": "We can fix your refrigerator within a day or two.",
+    "f": "within a day or two",
+    "k": "ウィズィナデイオアトゥー(連結)",
+    "ja": "1〜2日で冷蔵庫を修理できます(第4問B)"
+   },
+   {
+    "en": "We can provide a replacement for free.",
+    "f": "for free",
+    "k": "ファフリー(弱形)",
+    "ja": "代用品を無料でご提供できます(第4問B)"
+   },
+   {
+    "en": "Wristwatches were worn only by women.",
+    "f": "worn only by",
+    "k": "ウォーノンリバイ(連結)",
+    "ja": "腕時計は女性だけが着けるものだった(第5問)"
+   },
+   {
+    "en": "The First World War marked a turning point.",
+    "f": "marked a turning point",
+    "k": "マークタターニンポイント(脱落+連結)",
+    "ja": "第一次世界大戦が転換点となった(第5問)"
+   }
+  ]
+ },
+ {
+  "id": "reach30-01c",
+  "name": "第1回・否定と逆接(結論は後ろ)",
+  "ic": "🚫",
+  "sub": "問13(正答率0%)〜17の敗因を潰す",
+  "rule": "このクラスの最大の敗因。<b>問13は全員不正解</b>で、7人が「聞こえた単語」に釣られた。英語の結論は<b>否定語と But / so の後ろ</b>で裏返る。この12文で「否定を聞いた瞬間に構える」反射を作る。",
+  "items": [
+   {
+    "en": "I don't recommend walking to the station with your luggage.",
+    "f": "don't recommend walking",
+    "k": "ドンレコメン(ド)ウォーキン",
+    "ja": "荷物を持って歩くのは勧めません(問13:7人がここに釣られた)"
+   },
+   {
+    "en": "I'm in no hurry, so I'll wait.",
+    "f": "in no hurry",
+    "k": "インノウハリー",
+    "ja": "急いでないので待ちます(問13:so の後ろが結論=④)"
+   },
+   {
+    "en": "You should take a taxi if you're in a hurry.",
+    "f": "if you're in a hurry",
+    "k": "イフョアインナハリー",
+    "ja": "急いでいるならタクシー(問13:if=条件つき。無条件の助言ではない)"
+   },
+   {
+    "en": "It's uphill from here.",
+    "f": "uphill",
+    "k": "アップヒル",
+    "ja": "ここから上り坂です(問13:歩きを勧めない理由)"
+   },
+   {
+    "en": "Unfortunately, you can't get a refund for sale items.",
+    "f": "can't get a refund",
+    "k": "キャン(ト)ゲラリファンド",
+    "ja": "セール品は返金できません(問14:can'tの強い音を取る)"
+   },
+   {
+    "en": "But you can exchange them.",
+    "f": "but you can exchange",
+    "k": "バッユークンイクスチェインジ",
+    "ja": "でも交換はできます(問14:Butの後ろで可能性が開く)"
+   },
+   {
+    "en": "I'm not very happy with the food here.",
+    "f": "not very happy",
+    "k": "ナッヴェリハピー",
+    "ja": "ここの食事にはあまり満足していない(問15:not very=やんわり否定)"
+   },
+   {
+    "en": "This hotel is far from downtown.",
+    "f": "far from downtown",
+    "k": "ファーフラムダウンタウン",
+    "ja": "このホテルは中心街から遠い(問15:不満の根拠)"
+   },
+   {
+    "en": "I thought it was Saturday next week.",
+    "f": "I thought it was",
+    "k": "アイソーティッワズ",
+    "ja": "来週の土曜だと思ってた(問16:I thought=思い込み→この後訂正が来る合図)"
+   },
+   {
+    "en": "I'll go with you! I'll call her right away.",
+    "f": "I'll go with you",
+    "k": "アイルゴウウィジュー",
+    "ja": "あなたと行くわ!すぐ電話する(問16:最後の宣言で予定が裏返る)"
+   },
+   {
+    "en": "Do you want me to put this flower over there?",
+    "f": "do you want me to",
+    "k": "ドゥユワンミトゥ→ジュワミトゥ",
+    "ja": "この花をあそこに付けようか?(問17:場面の起点)"
+   },
+   {
+    "en": "But this one will look really nice high up there.",
+    "f": "look really nice high up there",
+    "k": "ルックリアリナイスハイアップゼア",
+    "ja": "でもこの花は高い所に飾ったらすごく素敵(問17:届かない+それでも高い所→台がいる、の2段目)"
+   }
+  ]
+ },
+ {
+  "id": "reach30-01d",
+  "name": "第1回・数字とルールの適用範囲",
+  "ic": "💰",
+  "sub": "問24(②に5人)の罠と料金・時間表現",
+  "rule": "問24は<b>5人が同じ誤答</b>。「学生は半額」を延長料金にまで適用してしまった。数字は聞けても<b>ルールがどこまで適用されるか</b>を聞き落とすと失点する。数字+適用範囲の言い回しをセットで耳に入れる。",
+  "items": [
+   {
+    "en": "The basic rate covers the first sixty minutes.",
+    "f": "the first sixty minutes",
+    "k": "ザファーストスィクスティミニッツ",
+    "ja": "基本料金は最初の60分(問22:coverの意味も重要)"
+   },
+   {
+    "en": "The price is four dollars for the open area.",
+    "f": "four dollars",
+    "k": "フォーダラーズ",
+    "ja": "オープンエリアは4ドル"
+   },
+   {
+    "en": "It costs six dollars for an individual booth.",
+    "f": "six dollars",
+    "k": "スィックスダラーズ",
+    "ja": "個室は6ドル(問23)"
+   },
+   {
+    "en": "We charge one dollar for each additional thirty minutes.",
+    "f": "each additional thirty minutes",
+    "k": "イーチアディショナルサーリーミニッツ",
+    "ja": "延長30分ごとに1ドル(問25:additionalが聞こえたら追加計算)"
+   },
+   {
+    "en": "The basic rate for students is half.",
+    "f": "is half",
+    "k": "イズハーフ",
+    "ja": "学生の基本料金は半額(問22:basic rateだけが半額!)"
+   },
+   {
+    "en": "The same rate as for adults applies to additional time.",
+    "f": "applies to additional time",
+    "k": "アプライズトゥアディショナルタイム",
+    "ja": "延長は大人と同額(問24:②に5人が落ちた罠の本体。applies to=適用範囲の合図)"
+   },
+   {
+    "en": "The next bus comes at one thirty.",
+    "f": "at one thirty",
+    "k": "アッワンサーリー(30=前が強い)",
+    "ja": "次のバスは1時30分(問13:13thirteenとの聞き分け)"
+   },
+   {
+    "en": "The repair cost will be two hundred fifty dollars at most.",
+    "f": "at most",
+    "k": "アッモウスト",
+    "ja": "修理費は最大でも250ドル(問26:at most=上限)"
+   },
+   {
+    "en": "It usually takes about a week.",
+    "f": "about a week",
+    "k": "アバウラウィーク(フラップT)",
+    "ja": "普通は1週間ほどかかります(問26:条件A×の根拠)"
+   },
+   {
+    "en": "The repair will cost two hundred eighty dollars.",
+    "f": "two hundred eighty dollars",
+    "k": "トゥーハンドレッ(ド)エイティダラーズ",
+    "ja": "修理費は280ドル(問26:正解④の数字。eighty/eighteenに注意)"
+   }
+  ]
+ },
+ {
+  "id": "reach30-01e",
+  "name": "第1回・講義を聞く(腕時計の歴史)",
+  "ic": "🎓",
+  "sub": "第5問(問27〜33、正答率33〜67%)対策",
+  "rule": "第5問は1回読みの講義。空欄の答えは<b>ワークシートの言葉に言い換えられて</b>読まれる。たとえば「a practical tool」は本文では <b>important equipment</b>。講義で鍵になった文を、言い換え先とセットで耳に入れる。",
+  "items": [
+   {
+    "en": "Wristwatches in those days could not keep accurate time.",
+    "f": "could not keep accurate time",
+    "k": "クドナッキープアキュレッタイム",
+    "ja": "当時の腕時計は正確な時を刻めなかった(問27:lack of accuracyの元の文)"
+   },
+   {
+    "en": "They were not made strong enough for hard daily usage.",
+    "f": "strong enough for",
+    "k": "ストロングイナフフォー",
+    "ja": "日常のハードな使用に耐える強度がなかった(問27:toughnessの元の文)"
+   },
+   {
+    "en": "Wristwatches were fashion accessories in those days.",
+    "f": "fashion accessories",
+    "k": "ファッションアクセサリーズ",
+    "ja": "当時の腕時計はファッションアクセサリー(問29:a fashion itemへの言い換え)"
+   },
+   {
+    "en": "Men usually wore stronger and more accurate pocket watches.",
+    "f": "stronger and more accurate",
+    "k": "ストロンガーアンモアアキュレッ",
+    "ja": "男性はより丈夫で正確な懐中時計を(問28〜29:男女の対比)"
+   },
+   {
+    "en": "They found it difficult to look at their pocket watch in battle.",
+    "f": "difficult to look at",
+    "k": "ディフィカルトゥルッカッ",
+    "ja": "戦闘中に懐中時計を見るのは困難だった(問30:militaryへの転換点)"
+   },
+   {
+    "en": "Both of their hands were full.",
+    "f": "hands were full",
+    "k": "ハンズワーフル",
+    "ja": "両手がふさがっていた(問30:困りごとの具体)"
+   },
+   {
+    "en": "They came up with the idea of attaching watches to their wrist.",
+    "f": "came up with",
+    "k": "ケイマップウィズ",
+    "ja": "手首に付ける発想を思いついた(解決の合図:come up with)"
+   },
+   {
+    "en": "Soldiers had to carry out their missions with exact timing.",
+    "f": "carry out their missions",
+    "k": "キャリアウッゼアミッションズ",
+    "ja": "兵士は正確なタイミングで任務を遂行(問30〜31:軍用の理由)"
+   },
+   {
+    "en": "Wristwatches became important equipment for them.",
+    "f": "important equipment",
+    "k": "インポータントイクイップメント",
+    "ja": "腕時計は重要な装備になった(問31:a practical toolはこの言い換え!④⑤に落ちた人はここ)"
+   },
+   {
+    "en": "After the war, wristwatches became popular with civilians as well.",
+    "f": "as well",
+    "k": "アズウェル",
+    "ja": "戦後は一般市民にも広まった(問28〜31:men and womenへの接続)"
+   },
+   {
+    "en": "More than ninety percent of Japanese people used a smartphone.",
+    "f": "more than ninety percent",
+    "k": "モアザンナインティパーセント",
+    "ja": "日本人の90%以上がスマホを使用(問32:Aの発言の検証点)"
+   },
+   {
+    "en": "Nearly sixty percent of them wore a wristwatch.",
+    "f": "nearly sixty percent",
+    "k": "ニアリースィクスティパーセント",
+    "ja": "そのうち60%近くが腕時計を着用(問32〜33:図表と突き合わせる数字)"
+   }
+  ]
+ },
+ {
+  "id": "reach30-01f",
+  "name": "第1回・主張のつかみ方(第6問)",
+  "ic": "🗣️",
+  "sub": "問34〜37(正答率33〜67%)対策",
+  "rule": "第6問の主張は一度では言われない。<b>不満・強調・立場表明の形で繰り返される</b>。「keeps asking(何度も聞いてくる=うんざり)」「I don't think(反対)」のような<b>主張マーカー</b>を拾えれば、問34〜37は全部つながる。",
+  "items": [
+   {
+    "en": "I had to stay up late last night.",
+    "f": "stay up late",
+    "k": "ステイアップレイト",
+    "ja": "昨夜は夜更かしするはめになった(問34:Tobyの不満の始まり)"
+   },
+   {
+    "en": "There is so much planning to do.",
+    "f": "so much planning",
+    "k": "ソウマッチプランニング",
+    "ja": "計画することが多すぎる(問34:so much=不満の強調)"
+   },
+   {
+    "en": "She keeps asking us about where to stay.",
+    "f": "keeps asking us",
+    "k": "キープスアスキンガス",
+    "ja": "彼女は何度も聞いてくる(問34:keep -ing=繰り返し=うんざりの合図)"
+   },
+   {
+    "en": "I don't like planning so thoroughly.",
+    "f": "planning so thoroughly",
+    "k": "プランニングソウサラリー",
+    "ja": "そんなに綿密に計画するのは好きじゃない(問34:正解②の核心)"
+   },
+   {
+    "en": "I'd rather have her decide everything herself.",
+    "f": "I'd rather",
+    "k": "アイドラザー",
+    "ja": "むしろ彼女に全部決めてほしい(問34:I'd rather=本音)"
+   },
+   {
+    "en": "Making arrangements can be stressful for everyone.",
+    "f": "can be stressful",
+    "k": "クンビーストレスフル",
+    "ja": "手配は誰にとってもストレスになりうる(問35:Karenの受け止め)"
+   },
+   {
+    "en": "Think of it this way.",
+    "f": "think of it this way",
+    "k": "シンコヴィッディスウェイ",
+    "ja": "こう考えてみて(問35:提案の直前に来る合図)"
+   },
+   {
+    "en": "You're gaining so much knowledge by planning the trip.",
+    "f": "gaining so much knowledge",
+    "k": "ゲイニングソウマッチナレッジ",
+    "ja": "計画で多くの知識を得ている(問35:正解④=計画の利点を見て、の元の文)"
+   },
+   {
+    "en": "I don't think guns should be allowed.",
+    "f": "I don't think",
+    "k": "アイドンシンク",
+    "ja": "銃は許可されるべきでないと思う(問36:Miyukiの明確な反対=1人の根拠)"
+   },
+   {
+    "en": "I haven't made up my mind on this issue yet.",
+    "f": "made up my mind",
+    "k": "メイダップマイマインド",
+    "ja": "まだ意見を決めていない(問36:Peterは賛成でも反対でもない)"
+   },
+   {
+    "en": "We need to protect ourselves.",
+    "f": "protect ourselves",
+    "k": "プロテクトアワセルヴズ",
+    "ja": "自分たちの身を守る必要がある(問36:Allisonの賛成の根拠)"
+   },
+   {
+    "en": "People who have guns at home are more likely to be killed by guns.",
+    "f": "more likely to be killed",
+    "k": "モアライクリトゥビキルド",
+    "ja": "家に銃がある人の方が銃で死ぬ可能性が高い(問37:③に3人。図表②を選ぶ決め手の文)"
+   }
+  ]
+ }
+]
